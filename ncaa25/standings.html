@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standings</title> <a href="sec.html"> Home </a>  
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Standings</h1>
+    <table id="standingsTable">
+        <thead>
+            <tr>
+                <th>Team</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Home</th>
+                <th>Away</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>FSU</td>
+                <td>10</td>
+                <td>1</td>
+                <td>7-1</td>
+                <td>3-0</td>
+            </tr>
+            <tr>
+                <td>Nebraska</td>
+                <td>9</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Penn State</td>
+                <td>9</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Georgia</td>
+                <td>10</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Texas</td>
+                <td>6</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>Mississippi State</td>
+                <td>7</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>Ole Miss</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>Tennessee</td>
+                <td>5</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>North Carolina</td>
+                <td>3</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>Ohio state</td>
+                <td>3</td>
+                <td>9</td>
+            </tr>
+           
+            <tr>
+                <td>LSU</td>
+                <td>3</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>Oregon</td>
+                <td>1</td>
+                <td>10</td>
+            </tr>
+           
+            <!-- Add more rows here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const table = document.getElementById("standingsTable");
+            const headers = table.querySelectorAll("th");
+            
+            headers.forEach((header, index) => {
+                header.addEventListener("click", () => {
+                    sortTable(index);
+                });
+            });
+
+            function sortTable(columnIndex) {
+                const rows = Array.from(table.querySelectorAll("tbody tr"));
+                const isNumericColumn = headers[columnIndex].textContent === "Wins" || headers[columnIndex].textContent === "Losses";
+                
+                rows.sort((rowA, rowB) => {
+                    const cellA = rowA.children[columnIndex].textContent.trim();
+                    const cellB = rowB.children[columnIndex].textContent.trim();
+                    
+                    const a = isNumericColumn ? parseInt(cellA) : cellA.toLowerCase();
+                    const b = isNumericColumn ? parseInt(cellB) : cellB.toLowerCase();
+
+                    return a > b ? 1 : (a < b ? -1 : 0);
+                });
+
+                // Remove existing rows
+                const tbody = table.querySelector("tbody");
+                tbody.innerHTML = "";
+
+                // Append sorted rows
+                rows.forEach(row => tbody.appendChild(row));
+            }
+        });
+    </script>
+</body>
+</html>
